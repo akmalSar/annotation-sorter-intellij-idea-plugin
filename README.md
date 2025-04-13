@@ -44,7 +44,7 @@ Thank you for your support!
 
 > **Annotation Sorter Settings UI (Drag & Drop)**
 >
-> ![Drag and drop UI](screenshots/settings.gif)
+> ![Drag and drop UI](screenshots/settings-ui.png)
 
 > **Before & After Annotation Reformat**
 >
