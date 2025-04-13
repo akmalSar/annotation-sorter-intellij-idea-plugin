@@ -1,0 +1,54 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+	<!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+	<id>com.sarhan.sort-annotation-plugin</id>
+
+	<name>Java Annotation Sorter</name>
+
+	<!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+	<vendor email="akmal.sarhan@gmail.com" url="https://github.com/akmalSar">Akmal Sarhan</vendor>
+
+	<!-- Product and plugin compatibility requirements.
+		 Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+	<depends>com.intellij.modules.platform</depends>
+	<depends>com.intellij.java</depends>
+	<depends>com.intellij.modules.java-capable</depends>
+
+	<!-- Extension points defined by the plugin.
+		 Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+	<extensions defaultExtensionNs="com.intellij">
+		<postFormatProcessor implementation="com.sarhan.intellij.plugin.AnnotationSortPreFormatProcessor"/>
+
+		<!-- Startup activity registration -->
+		<postStartupActivity implementation="com.sarhan.intellij.plugin.AnnotationSortingStartupActivity"/>
+		<!-- Application-level service instead of project-level -->
+		<applicationService serviceImplementation="com.sarhan.intellij.plugin.ui.AnnotationSortingSettings"/>
+
+		<!-- Application-level configurable -->
+		<applicationConfigurable groupId="tools"
+								 instance="com.sarhan.intellij.plugin.ui.AnnotationSortingConfigurable"
+								 id="com.sarhan.intellij.plugin.ui.AnnotationSortingConfigurable"
+								 displayName="Annotation Sorting"/>
+	</extensions>
+
+<!--	<actions>-->
+<!--		<action id="AkSar_SortAnnotationsAction"-->
+<!--				icon="AllIcons.ObjectBrowser.Sorted"-->
+<!--				class="com.sarhan.intellij.plugin.actions.SortAnnotationsAction"-->
+<!--				text="Sort Annotations"-->
+<!--				description="Sorts annotations on a class alphabetically">-->
+<!--			<add-to-group group-id="CodeMenu" anchor="last"/>-->
+<!--			<add-to-group group-id="EditorPopupMenu" anchor="last"/>-->
+<!--		</action>-->
+<!--		<action id="AkSar_SortAnnotationsDirectoryAction"-->
+<!--				icon="AllIcons.ObjectBrowser.SortByType"-->
+<!--				class="com.sarhan.intellij.plugin.actions.SortAnnotationsDirectoryAction"-->
+<!--				text="Sort Annotations in Directory"-->
+<!--				description="Sorts annotations alphabetically on all classes in the selected directory">-->
+<!--			<add-to-group group-id="ProjectViewPopupMenu"-->
+<!--						  anchor="before"-->
+<!--						  relative-to-action="FindUsages"/>-->
+<!--		</action>-->
+<!--	</actions>-->
+
+</idea-plugin>
