@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
@@ -33,6 +34,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementFactory;
 import com.intellij.psi.PsiField;
@@ -262,37 +264,45 @@ public abstract class BaseSortAction extends DumbAwareAction {
 	}
 
 	public static void sortClass(Project project, PsiClass psiClass) {
+
+		PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
 		DumbService.getInstance(project).runWhenSmart(() -> {
-			try {
-				WriteCommandAction.runWriteCommandAction(project, () -> {
-					sortAnnotationsForFields(project, psiClass);
-					sortAnnotationsForMethods(project, psiClass);
-					sortAnnotationsForConstructors(project, psiClass);
-					sortAnnotationsForInnerClasses(project, psiClass);
-					PsiModifierList modifierList = psiClass.getModifierList();
-					if ((modifierList == null) || !modifierList.isValid()) {
-						return;
-					}
-
-					// Get all annotations
-					PsiAnnotation[] annotations = modifierList.getAnnotations();
-					if (annotations.length < 2) {
-						return;
-					}
-
-					// Get all modifier strings (public, private, static, etc.)
-					List<String> modifiers = new ArrayList<>();
-					for (String modifier : PsiModifier.MODIFIERS) {
-						if (modifierList.hasExplicitModifier(modifier)) {
-							modifiers.add(modifier);
-						}
-					}
-
-					perform(project, psiClass, modifierList, annotations, modifiers, sort(annotations));
-				});
+			if (!psiClass.isValid()) {
+				return;
 			}
-			catch (PsiInvalidElementAccessException accessException) {
-				Messages.showErrorDialog(project, accessException.getMessage(), "Error");
+			Document document = psiDocumentManager.getDocument(psiClass.getContainingFile());
+			if ((document != null) && psiDocumentManager.isCommitted(document)) {
+				try {
+					WriteCommandAction.runWriteCommandAction(project, () -> {
+						sortAnnotationsForFields(project, psiClass);
+						sortAnnotationsForMethods(project, psiClass);
+						sortAnnotationsForConstructors(project, psiClass);
+						sortAnnotationsForInnerClasses(project, psiClass);
+						PsiModifierList modifierList = psiClass.getModifierList();
+						if ((modifierList == null) || !modifierList.isValid()) {
+							return;
+						}
+
+						// Get all annotations
+						PsiAnnotation[] annotations = modifierList.getAnnotations();
+						if (annotations.length < 2) {
+							return;
+						}
+
+						// Get all modifier strings (public, private, static, etc.)
+						List<String> modifiers = new ArrayList<>();
+						for (String modifier : PsiModifier.MODIFIERS) {
+							if (modifierList.hasExplicitModifier(modifier)) {
+								modifiers.add(modifier);
+							}
+						}
+
+						perform(project, psiClass, modifierList, annotations, modifiers, sort(annotations));
+					});
+				}
+				catch (PsiInvalidElementAccessException accessException) {
+					Messages.showErrorDialog(project, accessException.getMessage(), "Error");
+				}
 			}
 		});
 	}
