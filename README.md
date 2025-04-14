@@ -67,7 +67,8 @@ You can install the plugin directly from the **IntelliJ Plugin Marketplace**:
 
 **Plugins → Marketplace → Search for “Annotation Sorter” → Install**
 
-Or [click here to install](https://plugins.jetbrains.com/) (placeholder link).
+Or 👉 [Install this plugin from JetBrains Marketplace](https://plugins.jetbrains.com/plugin/27055)
+
 
 ---
 
