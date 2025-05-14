@@ -17,6 +17,9 @@
 	<!-- Extension points defined by the plugin.
 		 Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
 	<extensions defaultExtensionNs="com.intellij">
+		<applicationService serviceImplementation="com.sarhan.intellij.plugin.FileSaveListener"/>
+		<applicationInitializedListener implementation="com.sarhan.intellij.plugin.ApplicationInitializedListenerImpl"/>
+
 		<postFormatProcessor implementation="com.sarhan.intellij.plugin.AnnotationSortPreFormatProcessor"/>
 
 		<!-- Startup activity registration -->
