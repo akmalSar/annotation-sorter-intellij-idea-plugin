@@ -64,10 +64,6 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.assertj:assertj-core:3.27.3")
 
-    // IntelliJ test framework
-//    testImplementation(platform("org.jetbrains.intellij.plugins:gradle-intellij-plugin:8.10.2"))
-//    testImplementation("com.jetbrains.intellij.idea:ideaIC:2024.3.5")
-    // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
     intellijPlatform {
         javaCompiler()
         create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
@@ -90,7 +86,6 @@ dependencies {
         dependsOn(tasks.test)
         dependsOn(tasks.named("format"))
         dependsOn(tasks.named("check"))
-//        dependsOn(tasks.named("verifyPlugin"))
     }
 }
 // Configure IntelliJ Platform Gradle Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html
@@ -146,6 +141,12 @@ intellijPlatform {
         ides {
             recommended()
         }
+    }
+}
+idea {
+    module {
+        isDownloadSources = true
+        isDownloadJavadoc = true
     }
 }
 
