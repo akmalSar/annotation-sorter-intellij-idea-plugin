@@ -1,6 +1,5 @@
 <!-- Plugin description -->
-# 🔀 Java Annotation Sorter
-
+Java Annotation Sorter
 **Annotation Sorter** is an IntelliJ plugin that helps you keep all your annotations organized and consistent by automatically reordering them based on your preferences, 🚀 clean annotations improve readability and reduce noise in code reviews
   
 

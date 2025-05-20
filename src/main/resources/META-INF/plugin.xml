@@ -4,7 +4,7 @@
 	<id>com.sarhan.sort-annotation-plugin</id>
 
 	<name>Java Annotation Sorter</name>
-
+	<description>Automatically sorts Java annotations based on configurable rules. Works on file save and during code formatting. Helps maintain consistent annotation ordering across your codebase.</description>
 	<!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
 	<vendor email="akmal.sarhan@gmail.com" url="https://github.com/akmalSar">Akmal Sarhan</vendor>
 
@@ -17,6 +17,7 @@
 	<!-- Extension points defined by the plugin.
 		 Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
 	<extensions defaultExtensionNs="com.intellij">
+		<fileDocumentManagerListener implementation="com.sarhan.intellij.plugin.FileSaveListener"/>
 		<postFormatProcessor implementation="com.sarhan.intellij.plugin.AnnotationSortPreFormatProcessor"/>
 
 		<!-- Startup activity registration -->
@@ -31,24 +32,5 @@
 								 displayName="Annotation Sorting"/>
 	</extensions>
 
-<!--	<actions>-->
-<!--		<action id="AkSar_SortAnnotationsAction"-->
-<!--				icon="AllIcons.ObjectBrowser.Sorted"-->
-<!--				class="com.sarhan.intellij.plugin.actions.SortAnnotationsAction"-->
-<!--				text="Sort Annotations"-->
-<!--				description="Sorts annotations on a class alphabetically">-->
-<!--			<add-to-group group-id="CodeMenu" anchor="last"/>-->
-<!--			<add-to-group group-id="EditorPopupMenu" anchor="last"/>-->
-<!--		</action>-->
-<!--		<action id="AkSar_SortAnnotationsDirectoryAction"-->
-<!--				icon="AllIcons.ObjectBrowser.SortByType"-->
-<!--				class="com.sarhan.intellij.plugin.actions.SortAnnotationsDirectoryAction"-->
-<!--				text="Sort Annotations in Directory"-->
-<!--				description="Sorts annotations alphabetically on all classes in the selected directory">-->
-<!--			<add-to-group group-id="ProjectViewPopupMenu"-->
-<!--						  anchor="before"-->
-<!--						  relative-to-action="FindUsages"/>-->
-<!--		</action>-->
-<!--	</actions>-->
 
 </idea-plugin>
