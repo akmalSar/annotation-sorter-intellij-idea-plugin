@@ -28,7 +28,7 @@ tasks.withType<JavaCompile> {
     options.compilerArgs.add("-Xlint:unchecked")
 }
 tasks.test {
-    useJUnitPlatform()
+    useJUnit()
 }
 tasks.named("checkFormatTest") {
     // Declare ':formatTest' as an input of ':checkFormatTest'
@@ -75,6 +75,7 @@ dependencies {
         plugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
         pluginVerifier()
         zipSigner()
+        testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
     }
 }
 

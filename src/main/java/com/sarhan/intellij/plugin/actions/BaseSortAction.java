@@ -308,9 +308,21 @@ public abstract class BaseSortAction extends DumbAwareAction {
 	}
 
 	private static void sortAnnotationsForInnerClasses(Project project, PsiClass psiClass) {
-		Arrays.stream(psiClass.getInnerClasses())
-			.filter((PsiClass aClass) -> aClass.getAnnotations().length > 1)
-			.forEach((PsiClass aClass) -> sortClass(project, aClass));
+		// Handle declared inner classes and interfaces
+		Arrays.stream(psiClass.getInnerClasses()).forEach((PsiClass aClass) -> sortClass(project, aClass));
+
+		// Handle anonymous classes within methods
+		Arrays.stream(psiClass.getMethods()).forEach((PsiMethod method) -> {
+			method.accept(new com.intellij.psi.PsiRecursiveElementVisitor() {
+				@Override
+				public void visitElement(@NotNull PsiElement element) {
+					super.visitElement(element);
+					if (element instanceof com.intellij.psi.PsiAnonymousClass anonymousClass) {
+						sortClass(project, anonymousClass);
+					}
+				}
+			});
+		});
 	}
 
 	private static void processFieldAnnotations(Project project, PsiField field) {
