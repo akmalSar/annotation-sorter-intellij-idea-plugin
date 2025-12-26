@@ -1,5 +1,9 @@
 ## Unreleased
 
+## [1.0.5] - 2025-12-26
+### Added
+- Enhance annotation sorting to include inner and anonymous classes
+
 ## [1.0.4] - 2025-12-08
 ### Added
 - support for 2025.3
